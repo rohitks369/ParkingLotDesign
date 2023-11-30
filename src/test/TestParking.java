@@ -15,6 +15,10 @@ public class TestParking {
 		ParkingLot parkingLot = ParkingLot.getParkingLot();
 
 		parkingLot.initializeParkingSlots(10, 10);
+		
+		/*------------------
+		   Add Switch Case
+		 ------------------*/
 
 		// for two wheeler
 		Vehicle twoWheelerVehicle1 = new Vehicle("WB12", VehicleSize.TWOWHEELER);
