@@ -1,11 +1,14 @@
 package test;
 
+import java.util.Scanner;
+
 import exception.InvalidVehicleNumberException;
 import exception.ParkingFullException;
 import model.Ticket;
 import model.Vehicle;
 import model.VehicleSize;
 import service.ParkingLot;
+import service.ParkingSystemInterface;
 import strategy.FourWheelerWeekDayStrategy;
 import strategy.TwoWheelerWeekDayStrategy;
 
@@ -15,36 +18,38 @@ public class TestParking {
 		ParkingLot parkingLot = ParkingLot.getParkingLot();
 
 		parkingLot.initializeParkingSlots(10, 10);
-		
-		/*------------------
-		   Add Switch Case
-		 ------------------*/
 
-		// for two wheeler
-		Vehicle twoWheelerVehicle1 = new Vehicle("WB12", VehicleSize.TWOWHEELER);
-		Ticket twoWheelerTicket1 = parkingLot.park(twoWheelerVehicle1);
-		System.out.println("Ticket : " + twoWheelerTicket1);
-		
-		
-		Vehicle twoWheelerVehicle2 = new Vehicle("WB13", VehicleSize.TWOWHEELER);
-		Ticket twoWheelerTicket2 = parkingLot.park(twoWheelerVehicle2);
-		System.out.println("Ticket : " + twoWheelerTicket2);
+		Scanner scanner = new Scanner(System.in);
 
-		
-		// for four wheeler
-		Vehicle fourWheelerVehicle = new Vehicle("WB14", VehicleSize.FOURWHEELER);
+		ParkingSystem parkingSystem=new ParkingSystem() ;
 
-		Ticket fourWheelerTicket = parkingLot.park(fourWheelerVehicle);
+		boolean exit = false;
+		while (!exit) {
+			System.out.println("Choose an option:");
+			System.out.println("1. Park a vehicle");
+			System.out.println("2. Unpark a vehicle");
+			System.out.println("3. Exit");
 
-		System.out.println("Ticket : " + fourWheelerTicket);
-		
-		//unpark logic
-		System.out.println("\n\n");
-		int twoWheelerParkingCost=parkingLot.upPark(twoWheelerTicket2, new TwoWheelerWeekDayStrategy());
-		System.out.println("COST : "+twoWheelerParkingCost);
-		
-		int fourWheelerParkingCost=parkingLot.upPark(fourWheelerTicket, new FourWheelerWeekDayStrategy());
-		System.out.println("COST : "+fourWheelerParkingCost);
+			int choice = scanner.nextInt();
+
+			switch (choice) {
+			case 1:
+				parkingSystem.parkVehicle(scanner);
+				break;
+
+			case 2:
+				parkingSystem.unparkVehicle(scanner);
+				break;
+			case 3:
+				exit = true;
+				System.out.println("Exiting the parking system. Goodbye!");
+				break;
+			default:
+				System.out.println("Invalid option");
+				break;
+
+			}
+		}
 	}
 
 }
