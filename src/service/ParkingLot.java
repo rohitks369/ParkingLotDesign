@@ -2,7 +2,9 @@ package service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import exception.InvalidVehicleNumberException;
 import exception.ParkingFullException;
@@ -17,10 +19,12 @@ public class ParkingLot implements Parking {
 
 	private final List<Slot> twoWheelerSlots;
 	private final List<Slot> fourWheelerSlots;
+	private final HashMap<String,Ticket> ticketDetails;
 
 	public ParkingLot() {
 		this.twoWheelerSlots = new ArrayList<Slot>();
 		this.fourWheelerSlots = new ArrayList<Slot>();
+		ticketDetails=new HashMap<>();
 	}
 
 	public static ParkingLot getParkingLot() {
@@ -58,6 +62,8 @@ public class ParkingLot implements Parking {
 
 		Ticket ticket = new Ticket(nextAvailableSlot.getSlotNumber(), vehicle.getVehicleNumber(), new Date(),
 				vehicle.getVehicleSize());
+		
+		ticketDetails.put(vehicle.getVehicleNumber(), ticket);
 		return ticket;
 	}
 
@@ -94,9 +100,11 @@ public class ParkingLot implements Parking {
 				slot = getTwoWheelerSlotByVehicleNumber(ticket.getVehicleNumber());
 			}
 			slot.vacateSlot();
+			ticketDetails.remove(ticket.getVehicleNumber());
 
 			int hours = getHoursParked(ticket.getDate(), new Date());
 			costPerHours = parkingChargeStrategy.getCharge(hours);
+			
 
 			System.out.println("Vehicle with Registration : " + ticket.getVehicleNumber() + " at slot number : "
 					+ slot.getSlotNumber()+" was parked for : "+hours+" hours and the total charge is : "+costPerHours);
@@ -136,4 +144,13 @@ public class ParkingLot implements Parking {
 		throw new InvalidVehicleNumberException(
 				"Four Wheeler with Registration Number " + vehicleNumber + " not found !!");
 	}
+	
+	public Ticket getTicketDetails(String vehicleNumber)  throws InvalidVehicleNumberException{
+        if(ticketDetails.containsKey(vehicleNumber)) {
+        	return ticketDetails.get(vehicleNumber);
+        }
+        
+        throw new InvalidVehicleNumberException("Invaild Vehicle Number");
+    }
 }
+
