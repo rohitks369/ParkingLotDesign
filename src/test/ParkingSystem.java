@@ -8,14 +8,6 @@ import java.util.Scanner;
 
 import exception.InvalidVehicleNumberException;
 import exception.ParkingFullException;
-<<<<<<< Updated upstream
-import model.DayType;
-=======
-<<<<<<< HEAD
-=======
-import model.DayType;
->>>>>>> 35d61c20d28438a59a49e2c781698dfbe9801b32
->>>>>>> Stashed changes
 import model.Slot;
 import model.Ticket;
 import model.Vehicle;
