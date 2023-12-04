@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 import exception.InvalidVehicleNumberException;
 import exception.ParkingFullException;
-import model.DayType;
 import model.Slot;
 import model.Ticket;
 import model.Vehicle;
